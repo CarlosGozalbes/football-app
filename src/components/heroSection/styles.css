@@ -1,0 +1,26 @@
+.herosection__container {
+    height: 70vh;
+    background-color: #161616;
+    color: white;
+    
+}
+
+.herosection__subtitles {
+    font-weight: 300;
+}
+
+.herosection__left {
+    padding: 5rem 1rem 5rem 3rem;
+    max-width: 70ch;
+} 
+
+.benefits__section{
+    height: 20vh;
+    padding-left:10%;
+    padding-right:10%;
+}
+
+/* .herosection__left > * + * {
+    margin-top: 2rem;
+} */
+
