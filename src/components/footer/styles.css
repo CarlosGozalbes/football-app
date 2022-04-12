@@ -1,0 +1,39 @@
+.footer__ {
+    background-color: #161616;
+    color: white;
+}
+
+.footer__ a  {
+ color: rgb(196, 196, 196) !important;
+}
+
+.footer__ a:hover {
+    color: white !important;
+}
+
+.google__icon {
+ color: #F4B400;
+ font-size: 1.3rem;
+ cursor: pointer;
+}
+
+.facebook__icon{
+ color: #3b5998;
+ font-size: 1.3rem;
+ cursor: pointer;
+}
+
+.twitter__icon {
+ color: #1DA1F2;
+ font-size: 1.3rem;
+ cursor: pointer;
+}
+
+.instagram__icon {
+color: #833AB4;
+font-size: 1.3rem;
+cursor: pointer;
+}
+
+
+

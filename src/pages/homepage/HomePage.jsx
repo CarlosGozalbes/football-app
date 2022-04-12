@@ -1,12 +1,13 @@
 import React from 'react'
-import HeroSection from '../../components/heroSection/HeroSection.jsx'
+import LandingPage from "../../components/landingPage/LandingPage.jsx";
 import NavBar from '../../components/navbar/NavBar'
-
+import Footer from '../../components/footer/Footer.jsx'
 export default function HomePage() {
   return (
     <>
-    <NavBar/>
-    <HeroSection/>
+      <NavBar />
+      <LandingPage />
+      <Footer />
     </>
-  )
+  );
 }

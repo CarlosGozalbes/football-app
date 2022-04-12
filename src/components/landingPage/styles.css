@@ -1,7 +1,10 @@
+/* #c4f750 yellow #40a3aa blue #fedfc0 crema */
+
+
 .herosection__container {
     height: 70vh;
     background-color: #161616;
-    color: white;
+    color: white ;
     
 }
 
@@ -15,12 +18,27 @@
 } 
 
 .benefits__section{
-    height: 20vh;
+    font-weight: 700;
+    font-size: 1.3rem;
     padding-left:10%;
     padding-right:10%;
+    
 }
 
 /* .herosection__left > * + * {
     margin-top: 2rem;
 } */
 
+.spoonsor__section{
+    background-color: #fedfc0;
+}
+
+.spoonsor__text {
+    width: 40ch;
+    margin: auto;
+}
+
+.getintouch__button{
+    background-color:  #40a3aa !important;
+    font-weight: 600 !important;
+}
