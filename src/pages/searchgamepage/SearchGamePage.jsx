@@ -1,9 +1,9 @@
 import React from 'react'
-import GoogleMaps from '../../components/googleMaps/GoogleMaps'
+import MapOfMatches from "../../components/googleMaps/MapOfMatches";
 function SearchGamePage() {
   return (
     <div>
-      <GoogleMaps />
+      <MapOfMatches/>
     </div>
   );
 }

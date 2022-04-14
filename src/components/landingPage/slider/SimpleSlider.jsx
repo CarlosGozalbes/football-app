@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import 'antd/dist/antd.css';
 import { Avatar } from "@material-ui/core";
@@ -7,14 +7,7 @@ import './styles.css'
 
 
 function SimpleSlider() {
-  const contentStyle = {
-    height: "160px",
-    color: "#000000",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#fedfc0",
-  };
-
+  
     
     return (
       <Carousel className="py-4"
