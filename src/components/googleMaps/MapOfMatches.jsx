@@ -16,7 +16,7 @@ import { GiSoccerField } from "react-icons/gi";
 
 const center={lat:40.416729, lng:-3.703339}
 const pitch = new Icon({
-  iconUrl:  FaFutbol ,
+  iconUrl:  {FaFutbol} ,
   iconSize: [25, 25],
 });
 
@@ -34,7 +34,7 @@ function LocationMarkers() {
   });
 
   return (
-    <Marker position={marker}>
+    <Marker icon={pitch} position={marker}>
       
       <Popup>You are here</Popup>
     </Marker>
