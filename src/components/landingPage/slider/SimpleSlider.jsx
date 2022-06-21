@@ -25,7 +25,7 @@ function SimpleSlider() {
               className="mb-0"
               style={{ fontWeight: "600", fontSize: "1.3rem" }}
             >
-              John Smith
+              Carlos Gozalbes
             </p>
             <p className="mb-0" style={{ fontWeight: "400", width: "60ch" }}>
               Was new to the city and thanks to the app found a new group of

@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <>
       {/* <NavBar /> */}
-      <NavBar />
+      
       <div
         className="py-4 d-flex justify-content-end"
         style={{

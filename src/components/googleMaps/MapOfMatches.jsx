@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState,useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -9,23 +9,27 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import './style.css'
-import soccerfieldicon from './../../assets/soccerfieldicon.png'
-import {FaFutbol} from 'react-icons/fa'
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import '../googleMaps/style.css'
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
-import { GiSoccerField } from "react-icons/gi";
+// import soccerfieldicon from './../../assets/soccerfieldicon.png'
+// import {FaFutbol} from 'react-icons/fa'
+// import { Icon } from "leaflet";
+// import { GiSoccerField } from "react-icons/gi";
 
-const center={lat:40.416729, lng:-3.703339}
-const pitch = new Icon({
-  iconUrl:  {FaFutbol} ,
+
+
+
+function LocationMarkers({marker, setMarker}) {
+  
+/* const pitch = new Icon({
+  iconUrl: { FaFutbol },
   iconSize: [25, 25],
-});
-
-
-
-function LocationMarkers() {
-  const initialMarker= { lat:40.416729, lng:-3.703339};
-  const [marker, setMarker] = useState(initialMarker);
-
+}); */
   const map = useMapEvents({
     click(e) {
       setMarker(e.latlng);
@@ -34,106 +38,179 @@ function LocationMarkers() {
   });
 
   return (
-    <Marker icon={pitch} position={marker}>
-      
-      <Popup>You are here</Popup>
+    <Marker
+      position={marker}
+      icon={
+        new Icon({
+          iconUrl: markerIconPng,
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+        })
+      }
+    >
+      <Popup>Set game here</Popup>
     </Marker>
   );
 }
  
-// const position = [40.416729, -3.703339];
-// function LocationMarker() {
-//   const [position, setPosition] = useState(null);
-//   const map = useMapEvents({
-//     click() {
-//       map.locate();
-//     },
-//     locationfound(e) {
-//       setPosition(e.latlng);
-//       map.flyTo(e.latlng, map.getZoom());
-//     },
-//   });
-//   return position === null ? null : (
-//     <Marker
-//       position={position}
-//       //icon={pitch}
-//       /* onClick={() => {
-//         setActiveMatch(match);
-//       }} */
-//     >
-//       <Popup>You are here</Popup>
-//     </Marker>
-//   );
-// }
+
 
 
 
 
 function MapOfMatches() {
-  
+ /*  const initialMarker = { lat: 40.416729, lng: -3.703339 }; */
+  const [center, setCenter] = useState({ lat: 40.416729, lng: -3.703339 });
+  const [marker, setMarker] = useState({ lat: 40.416729, lng: -3.703339 });
+  const [nameOfThePlace, setNameOfThePlace] = useState("")
+  const [sport, setSport] = useState("")
+  const [date, setDate] = useState(new Date);
+  const [numberOfPlayersPerTeam, setnumberOfPlayersPerTeam] = useState("");
+  const [pricePerPerson, setpricePerPerson] = useState("");
+  const [details, setDetails] = useState("");
+  useEffect(() => {
+   if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      
+      setCenter({...center, lat: position.coords.latitude});
+      setCenter({...center, lng: position.coords.longitude});
+    });} else {
+      console.log('Geolocation not suported')
+    }  
+  },);
   return (
-    <MapContainer
-      center={[40.416729, -3.703339]}
-      zoom={11}
-      scrollWheelZoom={true}
-      zoomControl={false}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {/* <LocationMarker /> */}
-      <LocationMarkers />
+    <>
+      <div className="post-page-container d-flex justify-content-center">
+        <form
+          /* onSubmit={handleRegister} */ className=" [ d-flex flex-column mx-4 ] [ form-post-game ] "
+        >
+          <label htmlFor="email" className="mb-0">
+            <b> Name of the place</b>
+          </label>
 
-      <ZoomControl position="topright" />
-    </MapContainer>
+          <input
+            style={{ padding: "0.5rem" }}
+            value={nameOfThePlace}
+            onChange={(e) => setNameOfThePlace(e.target.value)}
+            className="mb-4"
+            type="text"
+            id="email"
+            placeholder="name of the place..."
+          />
+          <div className="d-flex justify-content-between">
+            <div className="d-flex flex-column">
+              <label htmlFor="sport" className="mb-0">
+                <b> Sport</b>
+              </label>
+
+              <input
+                style={{ padding: "0.5rem" }}
+                value={sport}
+                onChange={(e) => setSport(e.target.value)}
+                className="mb-4"
+                type="text"
+                id="sport"
+                placeholder="sport..."
+              />
+            </div>
+            <div className="d-flex flex-column">
+              <label htmlFor="people" className="mb-0">
+                <b> People per team</b>
+              </label>
+
+              <input
+                style={{ padding: "0.5rem" }}
+                value={numberOfPlayersPerTeam}
+                onChange={(e) => setnumberOfPlayersPerTeam(e.target.value)}
+                className="mb-4"
+                type="number"
+                id="people"
+                placeholder="5"
+              />
+            </div>
+            <div className="d-flex flex-column">
+              <label htmlFor="price" className="mb-0">
+                <b> Price per person</b>
+              </label>
+              <div>
+                <input
+                  style={{ padding: "0.5rem" }}
+                  value={pricePerPerson}
+                  onChange={(e) => setpricePerPerson(e.target.value)}
+                  className="mb-4"
+                  type="number"
+                  id="price"
+                  placeholder="1"
+                />{" "}
+                <span>
+                  {" "}
+                  <b>€</b>{" "}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
+              label="DateTimePicker"
+              value={date}
+              onChange={(newValue) => {
+                setDate(newValue);
+              }}
+            />
+          </LocalizationProvider>
+          <div className="d-flex justify-content-between">
+            <div className="d-flex flex-column">
+              <label htmlFor="description" className="mb-0 mt-4">
+                <b> Description and details</b>
+              </label>
+
+              <textarea
+                style={{ width: "30vw", height: "41vh", padding:'0.5rem' }}
+                value={details}
+                onChange={(e) => setDetails(e.target.value)}
+                className=""
+                type="text"
+                id="description"
+                placeholder="details..."
+              />
+            </div>
+            <div className="d-flex flex-column">
+              <b className="mt-4">Select the place</b>
+              <MapContainer
+                className=""
+                /* center={[40.416729, -3.703339]} */
+                center={center}
+                zoom={11}
+                scrollWheelZoom={true}
+                zoomControl={false}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+
+                <LocationMarkers marker={marker} setMarker={setMarker} />
+
+                <ZoomControl position="topright" />
+              </MapContainer>
+            </div>
+          </div>
+          <button
+            type="submit"
+            /* onClick={() => handelRegister()} */
+
+            className="mt-4 post-game-button"
+          >
+            Post game
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 
+
 export default MapOfMatches;
 
-// import React, {useState} from "react";
-// import {
-//   MapContainer,
-//   TileLayer,
-//   Marker,
-//   Popup,
-//   useMapEvents,
-// } from "react-leaflet";
-// import "leaflet/dist/leaflet.css";
-
-// function LocationMarker() {
-//   const [position, setPosition] = useState(null);
-//   const map = useMapEvents({
-//     click() {
-//       map.locate();
-//     },
-//     locationfound(e) {
-//       setPosition(e.latlng);
-//       map.flyTo(e.latlng, map.getZoom());
-//     },
-//   });
-
-//   return position === null ? null : (
-//     <Marker position={position}>
-//       <Popup>You are here</Popup>
-//     </Marker>
-//   );
-// }
-// function MapOfMatches() {
-//   return (
-//     <MapContainer
-//       center={{ lat: 51.505, lng: -0.09 }}
-//       zoom={13}
-
-//     >
-//       <TileLayer
-//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//       />
-//       <LocationMarker />
-//     </MapContainer>
-//   );
-// }
-
-// export default MapOfMatches;
