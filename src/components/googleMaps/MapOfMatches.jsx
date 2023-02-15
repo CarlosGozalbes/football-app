@@ -16,6 +16,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import '../googleMaps/style.css'
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 import { Icon } from "leaflet";
+import Geolocation from "@react-native-community/geolocation";
 // import soccerfieldicon from './../../assets/soccerfieldicon.png'
 // import {FaFutbol} from 'react-icons/fa'
 // import { Icon } from "leaflet";
@@ -60,8 +61,9 @@ function LocationMarkers({marker, setMarker}) {
 
 function MapOfMatches() {
  /*  const initialMarker = { lat: 40.416729, lng: -3.703339 }; */
-  const [center, setCenter] = useState({ lat: 40.416729, lng: -3.703339 });
-  const [marker, setMarker] = useState({ lat: 40.416729, lng: -3.703339 });
+  const [error, setError] = useState(""); 
+ const [center, setCenter] = useState({ 'lat': 40.416729, 'lng': -3.703339 });
+  const [marker, setMarker] = useState({ 'lat': 40.416729, 'lng': -3.703339 });
   const [nameOfThePlace, setNameOfThePlace] = useState("")
   const [sport, setSport] = useState("")
   const [date, setDate] = useState(new Date);
@@ -69,14 +71,26 @@ function MapOfMatches() {
   const [pricePerPerson, setpricePerPerson] = useState("");
   const [details, setDetails] = useState("");
   useEffect(() => {
-   if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      
-      setCenter({...center, lat: position.coords.latitude});
-      setCenter({...center, lng: position.coords.longitude});
-    });} else {
-      console.log('Geolocation not suported')
-    }  
+    Geolocation.getCurrentPosition(
+      (pos) => {
+       setError("");
+        setCenter({
+          'lat': pos.coords.latitude,
+          'lng': pos.coords.longitude,
+        });
+      },
+      (e) => setError(e.message)
+    );
+    /* if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        let latitute = position.coords.latitude;
+        let longitude = position.coords.longitude;
+        setCenter({ lat: latitute });
+        setCenter({ lng: longitude });
+      });
+    } else {
+      console.log("Geolocation not suported");
+    } */
   },);
   return (
     <>
